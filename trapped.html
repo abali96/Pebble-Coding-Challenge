@@ -23,7 +23,6 @@
 
     <script>
       var socket = io();
-      // on document ready, assign id
 
       $('button').on('click', function(){
         socket.emit('click', document.cookie.split('=')[1]);
