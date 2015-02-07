@@ -8,16 +8,19 @@
 
 if (annyang) {
   var socket = io();
-  var number = 0;
   var commands = { // annyang commands
-    'room number :number' : sendNumber
-  };
+    'room :number': function(number) {
+      if (number == "one")
+        number = 1;
+      // move this to server side, and also verify numericality
+      // of input later
 
-  var sendNumber = function(roomNumber) {
-      console.log(roomNumber);
-      commanderIO.emit('room order', roomNumber);
+      console.log(number);
+      socket.emit('room order', number);
       console.log('sent');
     }
+  };
+
 
   annyang.addCommands(commands); // Add our commands to annyang
   annyang.start(); // Start listening

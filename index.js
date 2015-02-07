@@ -37,7 +37,8 @@ trappedHTTP.listen(3000, function(){
 commanderIO.on('connection', function(socket) {
 
   socket.on('room order', function(roomNum) {
-    orderArray.push(rooomNum);
+    orderArray.push(roomNum);
+    console.log(orderArray);
   });
 
 });
