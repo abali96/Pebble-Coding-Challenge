@@ -15,8 +15,8 @@ io.on('connection', function(socket){
   // idNum is assigned to the given client
   // on connection (simulate room numbers)
 
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+  socket.on('click', function(roomNum){
+    console.log("clicked: " + roomNum);
   });
 });
 
