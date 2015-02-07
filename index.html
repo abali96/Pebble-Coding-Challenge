@@ -25,17 +25,21 @@
 
     <script>
       var socket = io();
+      // on document ready, assign id
+
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
 
+      socket.on('assign id', function(idNum) {
+        roomNumber = "roomNumber=" + idNum;
+        document.cookie=roomNumber;
+      });
+
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
-      });
-      socket.on('welcome', function(msg){
-        $('#messages').append($('<li>').text("Welcome! Start chatting"));
       });
     </script>
 

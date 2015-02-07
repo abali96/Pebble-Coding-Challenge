@@ -6,8 +6,15 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+var idNum = 0;
+
 io.on('connection', function(socket){
-  io.emit('welcome', "hi");
+
+  idNum += 1;
+  io.emit('assign id', idNum);
+  // idNum is assigned to the given client
+  // on connection (simulate room numbers)
+
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
