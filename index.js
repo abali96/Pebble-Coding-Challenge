@@ -3,35 +3,16 @@ var trappedHTTP = require('http').Server(trappedApp);
 var trappedIO = require('socket.io')(trappedHTTP);
 var idNum = 0;
 var clients = {};
-var clicked = false;
 
 var commanderApp = require('express')();
 var commanderHTTP = require('http').Server(commanderApp);
 var commanderIO = require('socket.io')(commanderHTTP);
 var orderArray = [];
 
-
-function waitForClick() {
-  console.log(clicked);
-  if (!clicked) {
-    setTimeout(waitForClick, 50);
-    return;
-  }
-}
-
-function sendCommands() {
-  console.log("In Send Commands");
-  for (var i = 0; i < orderArray.length; i++) {
-    clicked = false;
-
-    if (typeof clients[orderArray[i]] != 'undefined') {
-      trappedIO.to(clients[orderArray[i]]).emit('notification');
-    }
-
-    var socket = trappedIO.to(clients[orderArray[i]])
-    console.log(trappedIO.to(clients[orderArray[i]]));
-
-    waitForClick();
+function setFree() {
+  console.log("Setting Free");
+  if (typeof clients[orderArray[0]] != 'undefined') {
+    trappedIO.to(clients[orderArray[0]]).emit('notification');
   }
 }
 
@@ -48,9 +29,16 @@ trappedIO.on('connection', function(socket){
   socket.emit('assign id', idNum);
   // idNum is assigned to the given client
   // on connection (simulate room numbers)
+
   socket.on('click', function(roomNum){
     console.log("clicked: " + roomNum);
-    clicked = true;
+    orderArray.shift();
+    if (orderArray.length > 0) {
+      setFree();
+    }
+    else {
+      console.log("Free them!");
+    }
   });
 
 
@@ -69,7 +57,7 @@ commanderIO.on('connection', function(socket) {
   socket.on('room order', function(roomNum) {
     orderArray.push(roomNum);
     if (orderArray.length == 2) {
-      sendCommands();
+      setFree();
     }
   });
 });
