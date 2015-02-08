@@ -1,21 +1,25 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Prison Break</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; text-align: center;}
       button {
         position: absolute;
         top: 50%;
-        font-size: 200px;
+        font-size: 100px;
+      }
+      p {
+        font-size: 100px;
       }
 
     </style>
   </head>
   <body>
 
-  <button>Escape!</button>
+  <button type="button">Escape!</button>
+  <p id="orderStatus">Don't Click Yet</p>
 
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -24,13 +28,22 @@
     <script>
       var socket = io();
 
-      $('button').on('click', function(){
-        socket.emit('click', document.cookie.split('=')[1]);
-      });
-
       socket.on('assign id', function(idNum) {
+        console.log('ive been called');
         roomNumber = "roomNumber=" + idNum;
         document.cookie=roomNumber;
+      });
+
+      $('button').on('click', function(){
+        socket.emit('click', document.cookie.split('=')[1]);
+        this.html("Thanks!");
+      });
+
+
+
+      socket.on('notification', function() {
+        console.log("ive been notified");
+        $('p').html('click now');
       });
 
       // socket.on('chat message', function(msg){
