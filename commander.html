@@ -1,21 +1,20 @@
-<p>You can't see this</p>
+<!-- abstract out and run on document ready? -->
 
+<p>You can't see this</p>
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/1.4.0/annyang.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
 <script>
 
+
 if (annyang) {
   var socket = io();
   var commands = { // annyang commands
     'room :number': function(number) {
-      console.log(number);
       socket.emit('room order', number);
-      console.log('sent');
     }
   };
-
 
   annyang.addCommands(commands); // Add our commands to annyang
   annyang.start(); // Start listening
