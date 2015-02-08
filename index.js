@@ -17,7 +17,6 @@ function setFree() {
 }
 
 // trapped individuals
-
 trappedApp.get('/', function(req, res){
   res.sendFile(__dirname + '/trapped.html');
 });
@@ -26,24 +25,16 @@ trappedIO.on('connection', function(socket){
   idNum += 1;
   console.log(idNum);
   clients[idNum] = socket.id;
-  socket.emit('assign id', idNum);
-  // idNum is assigned to the given client
-  // on connection (simulate room numbers)
+  socket.emit('assign id', idNum);  // used to simulate room #
 
   socket.on('click', function(roomNum){
     console.log("clicked: " + roomNum);
     orderArray.shift();
-    if (orderArray.length > 0) {
+    if (orderArray.length > 0)
       setFree();
-    }
-    else {
+    else
       console.log("Free them!");
-    }
   });
-
-
-  // receive
-
 });
 
 trappedHTTP.listen(3000, function(){
@@ -52,13 +43,14 @@ trappedHTTP.listen(3000, function(){
 
 
 // commander
-
 commanderIO.on('connection', function(socket) {
   socket.on('room order', function(roomNum) {
+    if (roomNum == "one")
+      roomNum = 1;
+    // validate numericality!
     orderArray.push(roomNum);
-    if (orderArray.length == 2) {
+    if (orderArray.length == 3)
       setFree();
-    }
   });
 });
 

@@ -10,11 +10,6 @@ if (annyang) {
   var socket = io();
   var commands = { // annyang commands
     'room :number': function(number) {
-      if (number == "one")
-        number = 1;
-      // move this to server side, and also verify numericality
-      // of input later
-
       console.log(number);
       socket.emit('room order', number);
       console.log('sent');
