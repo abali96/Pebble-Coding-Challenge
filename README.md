@@ -5,10 +5,10 @@ Hey Pebble! Thanks for this awesome opportunity to join your team.
 
 As requested, my project is comprised of the following:
 - A webapp that is able to listen to the first person's computer’s microphone and push commands to the server.
-- A Node.js server that will receive commands from all the clients and console.log the order in which buttons are pressed as well as the phrase “Free them!” once all buttons have been pressed in the correct order.
+- A Node.js server that will receive commands from all the clients and console.log the order in which buttons the are pressed as well as the phrase “Free them!” once all buttons have been pressed in the correct order.
 - A webapp that will tell the people in the remaining rooms when to hit the button.
 - Websockets (socket.io) for client-server communication
-- An explain how you would scale the situation out to multiple groups of rooms all with different orders that the buttons need to be pressed (written below)
+- An explaination of how I would scale the situation out to multiple groups of rooms all with different orders that the buttons need to be pressed (written below)
 - Bonus: an outline of how I would structure and write unit tests for these applications
 
 ## Running the code
@@ -27,19 +27,9 @@ Annyang doesn't play nicely with background noise so I decided to console log th
 As a result, after saying "Room 1", wait until the console logs the order.
 Numbers other than those from 1 to 4 will be ignored and the console will indicate as such.
 I assume here that the console is visible to the commander so he knows when his commands are registered and when to continue.
-If that's not the case, I would integrate [say](https://www.npmjs.com/package/say) so that the commander can hear it.
+If that's not the case, I would integrate [say](https://www.npmjs.com/package/say) so that the commander can get auditory feedback.
 
-After the entire order is heard, the room first on the commander's list has the "Don't click yet." warning to "Click now."
-Upon clicking, the next user is notified, and so on and so forth.
-Once the last user in the list has clicked, the console will print "Free them!" and the user will be notified with "You're free!"
+After the entire order is heard, the room first on the commander's list displays "Click now.", contrary to what it said previously: "Don't click yet." Upon clicking, the next user in the specified commander order is notified, and so on and so forth. Once the last user in the list has clicked, the console will print "Free them!" and the user will be notified with "You're free!"
 
 However, if at any point the button is clicked out of order (or a button is clicked prior to any commander directions having hit the system),
 the console will print "They're trapped forever" and the user will see "You're trapped forever!" Blame room {x}", where 'x' is the person who caused the order to be incorrect.
-
-
-
-
-
-
-
-
