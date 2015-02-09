@@ -13,7 +13,7 @@ var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
 var trappedIO = require('socket.io')(trappedHTTP);
 var idNum = 0;
-var clients = {};
+var clients = {}; // should these be global idk
 
 var commanderApp = require('express')();
 var commanderHTTP = require('http').Server(commanderApp);
@@ -25,8 +25,19 @@ Number.prototype.between = function(min, max) {
 };
 
 function setFree() {
-  if (!(clients[orderArray[0]] === 'undefined')) // debatable necessity
+  if (!(clients[orderArray[0]] === 'undefined')) {  // debatable necessity
     trappedIO.to(clients[orderArray[0]]).emit('notification');
+    console.log("Paging client " + orderArray[0]);
+  }
+}
+
+function getKeyBySocketID(value) {
+  for (var key in clients) {
+    if (clients.hasOwnProperty(key)) {
+      if (clients[key] === value)
+        return key;
+    }
+  }
 }
 
 // trapped individuals
@@ -40,11 +51,13 @@ trappedIO.on('connection', function(socket){
   clients[idNum] = socket.id;
   socket.emit('assign id', idNum);  // used to simulate room #
   // clarify how rooms are identified
+
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
 
-  socket.on('click', function(roomNum){
+  socket.on('click', function(){
+    var roomNum = getKeyBySocketID(socket.id);
     console.log("Clicked: " + roomNum);
     if (roomNum != orderArray[0]) {
       trappedIO.sockets.emit('trapped forever', roomNum);
@@ -62,6 +75,7 @@ trappedIO.on('connection', function(socket){
     }
   });
 });
+
 
 trappedHTTP.listen(3000, function(){
   console.log('listening to rooms 1-4 on port 3000');
@@ -83,7 +97,6 @@ commanderIO.on('connection', function(socket) {
     // this accounts for false input from annyang
     // (used in development so no restart is necessary
     // if annyang misinterprets a value)
-
 
     if (orderArray.length == 3)
       setFree();

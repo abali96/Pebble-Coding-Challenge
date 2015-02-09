@@ -21,7 +21,7 @@
   <body>
 
   <button type="button"></button>
-  <p id="orderStatus">Don't Click Yet</p>
+  <p id="orderStatus">Don't click yet.</p>
 
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -32,8 +32,6 @@
 
       socket.on('assign id', function(idNum) {
         $('button').html("Escape Room " + idNum + "!");
-        roomNumber = "roomNumber=" + idNum;
-        document.cookie=roomNumber;
       });
 
       socket.on('trapped forever', function(roomNum) {
@@ -44,7 +42,7 @@
       });
 
       $('button').on('click', function(){
-        socket.emit('click', document.cookie.split('=')[1]);
+        socket.emit('click');
         $('#orderStatus').html("Thanks!");
       });
 
