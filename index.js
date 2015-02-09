@@ -31,7 +31,7 @@ function setFree() {
   }
 }
 
-function getKeyBySocketID(value) {
+function getRoomBySocketID(value) {
   for (var key in clients) {
     if (clients.hasOwnProperty(key)) {
       if (clients[key] === value)
@@ -47,17 +47,19 @@ trappedApp.get('/', function(req, res){
 
 trappedIO.on('connection', function(socket){
   idNum += 1;
-  console.log("Room " + idNum + " has connected");
   clients[idNum] = socket.id;
-  socket.emit('assign id', idNum);  // used to simulate room #
+
+  var roomNum = getRoomBySocketID(socket.id);
+  console.log("Room " + roomNum + " has connected");
+  socket.emit('assign id', roomNum);  // used to simulate room #
   // clarify how rooms are identified
 
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    console.log('Room ' + roomNum + ' has disconnected');
   });
 
   socket.on('click', function(){
-    var roomNum = getKeyBySocketID(socket.id);
+    var roomNum = getRoomBySocketID(socket.id);
     console.log("Clicked: " + roomNum);
     if (roomNum != orderArray[0]) {
       trappedIO.sockets.emit('trapped forever', roomNum);
