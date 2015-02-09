@@ -3,6 +3,11 @@
 // why do you have to allow mic every request
 // how to validate numericality
 // disable button after click and before allowed
+// Explain how you would scale the situation out to
+// multiple groups of rooms all with different orders that
+// the buttons need to be pressed.
+// consider 'poor internet connection'
+// clarify how rooms are identified
 
 var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
@@ -35,6 +40,9 @@ trappedIO.on('connection', function(socket){
   clients[idNum] = socket.id;
   socket.emit('assign id', idNum);  // used to simulate room #
   // clarify how rooms are identified
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
 
   socket.on('click', function(roomNum){
     console.log("Clicked: " + roomNum);
