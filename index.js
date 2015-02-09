@@ -1,13 +1,9 @@
 // Possible concerns:
-// use something better than cookies that works between tabs
-// why do you have to allow mic every request
 // how to validate numericality
-// disable button after click and before allowed
 // Explain how you would scale the situation out to
 // multiple groups of rooms all with different orders that
 // the buttons need to be pressed.
 // consider 'poor internet connection'
-// clarify how rooms are identified
 
 var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
@@ -78,7 +74,6 @@ trappedIO.on('connection', function(socket){
   });
 });
 
-
 trappedHTTP.listen(3000, function(){
   console.log('listening to rooms 1-4 on port 3000');
 });
@@ -100,7 +95,7 @@ commanderIO.on('connection', function(socket) {
     // (used in development so no restart is necessary
     // if annyang misinterprets a value)
 
-    if (orderArray.length == 3)
+    if (orderArray.length == 4)
       setFree();
   });
 });
