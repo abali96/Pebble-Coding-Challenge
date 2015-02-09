@@ -21,7 +21,7 @@ This may be abstracted out at a later date, given how complex and how in need of
 ` trappedApp ` is the app run by the individuals trapped in Rooms 1-4, and ` commanderApp ` is the app controlled by voice commands.
 The `trappedApp` runs on port 3000. `commanderApp` runs on port 8080.
 
-You may open multiple instances of localhost:3000 and localhost:8080 in the same browser with different tabs. It is assumed that only one instance of localhost:8080 will be run.
+You may open multiple instances of localhost:3000 and localhost:8080 in the same browser with different tabs. It is assumed that only one instance of localhost:8080 will be run at a give time.
 
 Open localhost:8080 in any browser and then start to speak as follows. Note that the order of rooms can change.
 Annyang doesn't play nicely with background noise so I decided to console log the current running order in which the rooms should press their buttons.
