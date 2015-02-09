@@ -1,5 +1,5 @@
 # Pebble Coding Challenge
-Node.js coding challenge made for Pebble Technology co-op application, Summer 2015 (getpebble.com)
+Node.js coding challenge made for [Pebble Technology](getpebble.com) co-op application, Summer 2015 
 
 Hey Pebble! Thanks for this awesome opportunity to join your team.
 
