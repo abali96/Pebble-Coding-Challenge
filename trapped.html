@@ -28,15 +28,15 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
     <script>
-      var socket = io();
 
-      socket.on('assign id', function(idNum) {
-        $('button').html("Escape Room " + idNum + "!");
-      });
+      $('button').html("Escape Room " + window.location.pathname.slice(1) + "!");
+
+      var socket = io();
 
       socket.on('trapped forever', function(roomNum) {
         $('#orderStatus').html("You're trapped forever! Blame room " + roomNum);
       });
+
       socket.on('free', function() {
         $('#orderStatus').html("You're free!");
       });

@@ -8,13 +8,14 @@
 var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
 var trappedIO = require('socket.io')(trappedHTTP);
-var idNum = 0;
 var clients = {}; // should these be global idk
 
 var commanderApp = require('express')();
 var commanderHTTP = require('http').Server(commanderApp);
 var commanderIO = require('socket.io')(commanderHTTP);
 var orderArray = [];
+
+var url = require('url');
 
 Number.prototype.between = function(min, max) {
   return this >= min && this <= max;
@@ -42,25 +43,20 @@ function printLog(value) {
 }
 
 // trapped individuals
-trappedApp.get('/', function(req, res){
+trappedApp.get('/:roomNum', function(req, res){
   res.sendFile(__dirname + '/trapped.html');
 });
 
 trappedIO.on('connection', function(socket){
-  idNum += 1;
-  clients[idNum] = socket.id;
-  var roomNum = getRoomBySocketID(socket.id);
-
+  var roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
+  clients[roomNum] = socket.id; // assume only one instance of given room's path will be accessed
   console.log("Room " + roomNum + " has connected");
-
-  socket.emit('assign id', roomNum);  // used to simulate room #
 
   socket.on('disconnect', function(){
     console.log('Room ' + roomNum + ' has disconnected');
   });
 
   socket.on('click', function(){
-    var roomNum = getRoomBySocketID(socket.id);
     console.log("Clicked: " + roomNum);
     if (roomNum != orderArray[0]) {
       trappedIO.sockets.emit('trapped forever', roomNum);
