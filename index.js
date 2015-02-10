@@ -1,9 +1,6 @@
-// Possible concerns:
-
 // Explain how you would scale the situation out to
 // multiple groups of rooms all with different orders that
 // the buttons need to be pressed.
-
 // consider 'poor internet connection'
 
 var trappedApp = require('express')();
@@ -58,7 +55,7 @@ trappedIO.on('connection', function(socket){
   });
 
   socket.on('click', function(){
-    console.log("Clicked: " + roomNum);
+    printLog("Clicked: " + roomNum);
     if (roomNum != orderArray[0]) {
       trappedIO.sockets.emit('trapped forever', roomNum);
       printLog("They're trapped forever!");

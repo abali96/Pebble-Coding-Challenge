@@ -1,0 +1,75 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'routes/routes' ]
+2 info using npm@2.4.1
+3 info using node@v0.10.36
+4 warn package.json chat-example@1.0.0 No repository field.
+5 warn package.json assert@1.3.0 assert is also the name of a node core module.
+6 silly cache add args [ 'routes/routes', null ]
+7 verbose cache add spec routes/routes
+8 silly cache add parsed spec { raw: 'routes/routes',
+8 silly cache add   scope: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: 'routes/routes',
+8 silly cache add   spec: 'routes/routes',
+8 silly cache add   type: 'github' }
+9 info maybeGithub Attempting routes/routes from git://github.com/routes/routes
+10 verbose addRemoteGit u="git://github.com/routes/routes" silent=true
+11 silly addRemoteGit normalized { url: 'git://github.com/routes/routes', branch: 'master' }
+12 silly addRemoteGit v git-github-com-routes-routes-908a4004
+13 verbose addRemoteGit /Users/arjunbali/.npm/_git-remotes/git-github-com-routes-routes-908a4004 not in flight; cloning
+14 info git [ 'clone',
+14 info git   '--template=/Users/arjunbali/.npm/_git-remotes/_templates',
+14 info git   '--mirror',
+14 info git   'git://github.com/routes/routes',
+14 info git   '/Users/arjunbali/.npm/_git-remotes/git-github-com-routes-routes-908a4004' ]
+15 verbose git clone git://github.com/routes/routes Cloning into bare repository '/Users/arjunbali/.npm/_git-remotes/git-github-com-routes-routes-908a4004'...
+15 verbose git clone git://github.com/routes/routes fatal: remote error:
+15 verbose git clone git://github.com/routes/routes   Repository not found.
+16 info maybeGithub Attempting routes/routes from git+ssh://git@github.com:routes/routes
+17 verbose addRemoteGit u="git+ssh://git@github.com:routes/routes" silent=false
+18 silly addRemoteGit normalized { url: 'ssh://git@github.com/routes/routes', branch: 'master' }
+19 silly addRemoteGit v ssh-git-github-com-routes-routes-1cf92cdd
+20 verbose addRemoteGit /Users/arjunbali/.npm/_git-remotes/ssh-git-github-com-routes-routes-1cf92cdd not in flight; cloning
+21 info git [ 'clone',
+21 info git   '--template=/Users/arjunbali/.npm/_git-remotes/_templates',
+21 info git   '--mirror',
+21 info git   'ssh://git@github.com/routes/routes',
+21 info git   '/Users/arjunbali/.npm/_git-remotes/ssh-git-github-com-routes-routes-1cf92cdd' ]
+22 error git clone ssh://git@github.com/routes/routes Cloning into bare repository '/Users/arjunbali/.npm/_git-remotes/ssh-git-github-com-routes-routes-1cf92cdd'...
+22 error git clone ssh://git@github.com/routes/routes ERROR: Repository not found.
+22 error git clone ssh://git@github.com/routes/routes fatal: Could not read from remote repository.
+22 error git clone ssh://git@github.com/routes/routes
+22 error git clone ssh://git@github.com/routes/routes Please make sure you have the correct access rights
+22 error git clone ssh://git@github.com/routes/routes and the repository exists.
+23 verbose stack Error: Command failed: Cloning into bare repository '/Users/arjunbali/.npm/_git-remotes/ssh-git-github-com-routes-routes-1cf92cdd'...
+23 verbose stack ERROR: Repository not found.
+23 verbose stack fatal: Could not read from remote repository.
+23 verbose stack
+23 verbose stack Please make sure you have the correct access rights
+23 verbose stack and the repository exists.
+23 verbose stack
+23 verbose stack     at ChildProcess.exithandler (child_process.js:658:15)
+23 verbose stack     at ChildProcess.emit (events.js:98:17)
+23 verbose stack     at maybeClose (child_process.js:766:16)
+23 verbose stack     at Socket.<anonymous> (child_process.js:979:11)
+23 verbose stack     at Socket.emit (events.js:95:17)
+23 verbose stack     at Pipe.close (net.js:466:12)
+24 verbose cwd /Users/arjunbali/Desktop/Code/chat-example
+25 error Darwin 14.0.0
+26 error argv "node" "/usr/local/bin/npm" "install" "--save" "routes/routes"
+27 error node v0.10.36
+28 error npm  v2.4.1
+29 error code 128
+30 error Command failed: Cloning into bare repository '/Users/arjunbali/.npm/_git-remotes/ssh-git-github-com-routes-routes-1cf92cdd'...
+30 error ERROR: Repository not found.
+30 error fatal: Could not read from remote repository.
+30 error
+30 error Please make sure you have the correct access rights
+30 error and the repository exists.
+31 error If you need help, you may report this error at:
+31 error     <http://github.com/npm/npm/issues>
+32 verbose exit [ 1, true ]

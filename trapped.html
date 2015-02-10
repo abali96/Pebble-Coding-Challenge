@@ -1,56 +1,40 @@
-<!-- abstract out and run on document ready? -->
-
 <!doctype html>
 <html>
   <head>
     <title>Prison Break</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; text-align: center;}
-      button {
-        position: absolute;
-        top: 50%;
-        font-size: 50px;
-      }
-      p {
-        font-size: 50px;
-      }
-
-    </style>
   </head>
   <body>
 
-  <button type="button"></button>
+  <button type="button" id='status'></button>
   <p id="orderStatus">Don't click yet.</p>
 
 
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <!-- start scripts -->
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    $('#status').html("Escape Room " + window.location.pathname.slice(1) + "!");
 
-    <script>
+    var socket = io();
 
-      $('button').html("Escape Room " + window.location.pathname.slice(1) + "!");
+    socket.on('trapped forever', function(roomNum) {
+      $('#orderStatus').html("You're trapped forever! Blame room " + roomNum);
+      $('#status').attr('disabled', true)
+    });
 
-      var socket = io();
+    socket.on('free', function() {
+      $('#orderStatus').html("You're free!");
+      $('#status').attr('disabled', true)
+    });
 
-      socket.on('trapped forever', function(roomNum) {
-        $('#orderStatus').html("You're trapped forever! Blame room " + roomNum);
-      });
+    $('button').on('click', function(){
+      socket.emit('click');
+      $('#orderStatus').html("Thanks!");
+    });
 
-      socket.on('free', function() {
-        $('#orderStatus').html("You're free!");
-      });
-
-      $('button').on('click', function(){
-        socket.emit('click');
-        $('#orderStatus').html("Thanks!");
-      });
-
-      socket.on('notification', function() {
-        $('#orderStatus').html('Click now.');
-      });
-
-    </script>
-
+    socket.on('notification', function() {
+      $('#orderStatus').html('Click now.');
+    });
+  </script>
   </body>
 </html>
