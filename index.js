@@ -13,8 +13,6 @@ var commanderHTTP = require('http').Server(commanderApp);
 var commanderIO = require('socket.io')(commanderHTTP);
 var orderArray = [];
 
-var url = require('url');
-
 Number.prototype.between = function(min, max) {
   return this >= min && this <= max;
 };
