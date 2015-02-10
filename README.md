@@ -15,7 +15,7 @@ As requested, my project is comprised of the following:
 1. Run ` npm install `.
 2. Run ` node index `.
 
-This will boot up the two apps. The code is structured such that both express apps are in the in the index.js file because it isn't much code.
+This will boot up the two apps. The code is structured such that both Express.js apps are in the in the `index.js` file because it isn't much code.
 This may be abstracted out at a later date, given how complex and how in need of separation the code gets.
 
 ` trappedApp ` is the app run by the individuals trapped in Rooms 1-4, and ` commanderApp ` is the app controlled by voice commands.
