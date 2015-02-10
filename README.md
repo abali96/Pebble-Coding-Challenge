@@ -21,16 +21,6 @@ This may be abstracted out at a later date, given how complex and how in need of
 ` trappedApp ` is the app run by the individuals trapped in Rooms 1-4, and ` commanderApp ` is the app controlled by voice commands.
 The `trappedApp` runs on port 3000. `commanderApp` runs on port 8080.
 
-You may open multiple instances of localhost:3000 and localhost:8080 in the same browser with different tabs. It is assumed that only one instance of localhost:8080 will be run at a give time.
+We assume here that each room has an instance of localhost:3000 running, each with with path localhost:3000/:roomNum, corresponding to the room that the app is running in. Opening these in different tabs in the same browser will not cause a problem. It is assumed that only one of each route is being hit at a given time for simplicity. If this is not the case, only the tab that has opened the given route most recently will work.
 
-Open localhost:8080 in any browser and then start to speak as follows. Note that the order of rooms can change.
-Annyang doesn't play nicely with background noise so I decided to console log the current running order in which the rooms should press their buttons.
-As a result, after saying "Room 1", wait until the console logs the order.
-Numbers other than those from 1 to 4 will be ignored and the console will indicate as such.
-I assume here that the console is visible to the commander so he knows when his commands are registered and when to continue.
-If that's not the case, I would integrate [say](https://www.npmjs.com/package/say) so that the commander can get auditory feedback.
-
-After the entire order is heard, the room first on the commander's list displays "Click now.", contrary to what it said previously: "Don't click yet." Upon clicking, the next user in the specified commander order is notified, and so on and so forth. Once the last user in the list has clicked, the console will print "Free them!" and the user will be notified with "You're free!"
-
-However, if at any point the button is clicked out of order (or a button is clicked prior to any commander directions having hit the system),
-the console will print "They're trapped forever" and the user will see "You're trapped forever!" Blame room {x}", where 'x' is the person who caused the order to be incorrect.
+Open localhost:8080 in any browser and then start to speak as follows. Annyang doesn't play nicely with background noise so I decided to console log the current running order in which the rooms should press their buttons, in addition to creating a replica of that console as the view for the commander app. Full instructions on how to run the commander app are written in the view file itself, including which commands are permitted under a given set of conditions.
