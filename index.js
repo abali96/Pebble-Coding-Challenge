@@ -1,8 +1,9 @@
 // Possible concerns:
-// how to validate numericality
+
 // Explain how you would scale the situation out to
 // multiple groups of rooms all with different orders that
 // the buttons need to be pressed.
+
 // consider 'poor internet connection'
 
 var trappedApp = require('express')();
@@ -99,14 +100,16 @@ commanderIO.on('connection', function(socket) {
     // if annyang misinterprets a value)
 
     if (orderArray.length == 4) {
+      commanderIO.sockets.emit('enable confirmation');
       commanderIO.sockets.emit('update log', "Confirm order? Say 'Complete' or 'Incomplete'");
       console.log("Asking commander to proceed with unlocking.")
     }
   });
 
   socket.on('confirm order', function(bool) {
-    if (bool)
+    if (bool) {
       setFree();
+    }
     else {
       printLog("Erasing last two terms...");
       orderArray.splice(-2, 2);

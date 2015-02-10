@@ -32,6 +32,11 @@ if (annyang) {
     $('#log').append('<li>' + message + '</li>');
   });
 
+  socket.on('enable confirmation', function(message) {
+    annyang.addCommands(commands);
+    annyang.removeCommands(['erase last', 'room :number']);
+  });
+
   var commands = { // annyang commands
     'room :number': function(number) {
       socket.emit('room order', number);
@@ -39,15 +44,21 @@ if (annyang) {
     'erase last': function(number) {
       socket.emit('erase command');
     },
-    'Complete': function() {
+    'complete': function() {
       socket.emit('confirm order', true);
+      annyang.removeCommands(commands);
     },
-    'Incomplete': function() {
+    'incomplete': function() {
       socket.emit('confirm order', false);
+      annyang.addCommands(commands);
+      annyang.removeCommands('complete', 'incomplete');
     }
   };
-  annyang.addCommands(commands); // Add our commands to annyang
-  annyang.start(); // Start listening
+  annyang.addCommands(commands);
+  // Can't add specific 'room :number' command for some reason
+  // so we add all then subtract.
+  annyang.removeCommands('complete', 'incomplete');
+  annyang.start();
 }
 </script>
 
