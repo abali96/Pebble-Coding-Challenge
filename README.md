@@ -4,9 +4,9 @@ Node.js coding challenge created for [Pebble Technology](http://getpebble.com)'s
 Hey Pebble! Thanks for this awesome opportunity to join your team.
 
 As requested, my project is comprised of the following:
-- A webapp that is able to listen to the first person's computer’s microphone and push commands to the server.
+- An Express.js web app that is able to listen to the first person's computer’s microphone using Annyang and push commands to the server.
 - A Node.js server that will receive commands from all the clients and console.log the order in which buttons the are pressed as well as the phrase “Free them!” once all buttons have been pressed in the correct order.
-- A webapp that will tell the people in the remaining rooms when to hit the button.
+- An Express.js web app that will tell the people in the remaining rooms when to hit the button.
 - Websockets (socket.io) for client-server communication
 - An explaination of how I would scale the situation out to multiple groups of rooms all with different orders that the buttons need to be pressed (written below)
 - Bonus: an outline of how I would structure and write unit tests for these applications
