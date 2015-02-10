@@ -23,7 +23,7 @@ Number.prototype.between = function(min, max) {
 function setFree() {
   if (!(clients[orderArray[0]] === 'undefined')) {  // debatable necessity
     trappedIO.to(clients[orderArray[0]]).emit('notification');
-    console.log("Paging client " + orderArray[0]);
+    printLog("Paging client " + orderArray[0]);
   }
 }
 
@@ -36,6 +36,11 @@ function getRoomBySocketID(value) {
   }
 }
 
+function printLog(value) {
+  console.log(value);
+  commanderIO.sockets.emit('update log', value);
+}
+
 // trapped individuals
 trappedApp.get('/', function(req, res){
   res.sendFile(__dirname + '/trapped.html');
@@ -44,11 +49,11 @@ trappedApp.get('/', function(req, res){
 trappedIO.on('connection', function(socket){
   idNum += 1;
   clients[idNum] = socket.id;
-
   var roomNum = getRoomBySocketID(socket.id);
+
   console.log("Room " + roomNum + " has connected");
+
   socket.emit('assign id', roomNum);  // used to simulate room #
-  // clarify how rooms are identified
 
   socket.on('disconnect', function(){
     console.log('Room ' + roomNum + ' has disconnected');
@@ -59,7 +64,7 @@ trappedIO.on('connection', function(socket){
     console.log("Clicked: " + roomNum);
     if (roomNum != orderArray[0]) {
       trappedIO.sockets.emit('trapped forever', roomNum);
-      console.log("They're trapped forever!");
+      printLog("They're trapped forever!");
     }
     else
     {
@@ -67,7 +72,7 @@ trappedIO.on('connection', function(socket){
       if (orderArray.length > 0)
         setFree();
       else {
-        console.log("Free them!");
+        printLog("Free them!");
         trappedIO.sockets.emit('free');
       }
     }
@@ -84,20 +89,40 @@ commanderIO.on('connection', function(socket) {
   socket.on('room order', function(roomNum) {
     if (roomNum == "one")
       roomNum = 1;
+
     roomNum = Number(roomNum);
-    if (roomNum.between(1,4)) {
+
+    if (roomNum.between(1,4) && orderArray.indexOf(roomNum) == -1) {
       orderArray.push(roomNum);
-      console.log("Current order is: " + orderArray.join(", "));
+      printLog("Current order is: " + orderArray.join(", "));
     }
     else
-      console.log("Invalid input '" + roomNum + "' skipped");
-    // this accounts for false input from annyang
+      printLog("Repeated or invalid input '" + roomNum + "' skipped");
+    // this accounts for false input from annyang or commander
     // (used in development so no restart is necessary
     // if annyang misinterprets a value)
 
-    if (orderArray.length == 4)
-      setFree();
+    if (orderArray.length == 4) {
+      commanderIO.sockets.emit('update log', "Confirm order? Say 'Complete' or 'Incomplete'");
+      console.log("Asking commander to proceed with unlocking.")
+    }
   });
+
+  socket.on('confirm order', function(bool) {
+    if (bool)
+      setFree();
+    else {
+      printLog("Erasing last two terms...");
+      orderArray.splice(-2, 2);
+      printLog("Current order is: " + orderArray.join(", "));
+    }
+  });
+
+  socket.on('erase command', function(roomNum) {
+    orderArray.pop();
+    printLog("Current order is: " + orderArray.join(", ")) ;
+  });
+
 });
 
 commanderApp.get('/', function(req, res){

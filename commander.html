@@ -1,6 +1,23 @@
 <!-- abstract out and run on document ready? -->
 
-<p>You can't see this</p>
+<p>Welcome, Commander!</p>
+
+<p>Possible Commands</p>
+<ul>
+  <li>Enter a new room number: Say 'Room (number)'.
+It will be added to the order kept on the server and a running order will be displayed
+each time a command has registered. If you don't get any feedback within 10 seconds,
+repeat the command.</li>
+<li>Delete last command: say 'Erase last'. Appropriate feedback will be displayed.</li>
+</ul>
+<p>Note: When you've entered four numbers, you will be prompted to say "complete" or "incomplete" to proceed with paging the trapped individuals. If you say incomplete, the last two orders will be erased from the server.</p>
+
+<p>Console Log Interface</p>
+<ul id='log'>
+</ul>
+
+
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/1.4.0/annyang.min.js"></script>
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -10,12 +27,25 @@
 
 if (annyang) {
   var socket = io();
+
+  socket.on('update log', function(message) {
+    $('#log').append('<li>' + message + '</li>');
+  });
+
   var commands = { // annyang commands
     'room :number': function(number) {
       socket.emit('room order', number);
+    },
+    'erase last': function(number) {
+      socket.emit('erase command');
+    },
+    'Complete': function() {
+      socket.emit('confirm order', true);
+    },
+    'Incomplete': function() {
+      socket.emit('confirm order', false);
     }
   };
-
   annyang.addCommands(commands); // Add our commands to annyang
   annyang.start(); // Start listening
 }
