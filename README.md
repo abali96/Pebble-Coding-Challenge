@@ -39,5 +39,5 @@ Whenever we need to emit events, we can simply write something like this: io.to(
 In terms of tracking the order in which the buttons must be pressed, I would likely choose Redis lists to track what I call the 'orderArray' of individual groups' required click sequence. We would be widely under-employing Redis' full capability, but it is well suited for frequently updated real-time data and is becoming relatively easy to scale given Cluster Support, both of which are assets given the nature of this application. However, evaluating this option, we must consider our RAM capacity when scaling Redis.
 
 ## Tests
-Unit test declarations were written with Mocha for both webapps. Their implementation is not complete.
+Unit test declarations were outlined with Mocha for both webapps. Although the implementation of each is not complete, the desired functions have been described and the creation of before hooks and after hooks for each test were written with the consultation of [this resource](http://stackoverflow.com/questions/15509231/unit-testing-node-js-and-websockets-socket-io). This automates the connection and disconnection of multiple sockets as necessary for testing purposes.
 
