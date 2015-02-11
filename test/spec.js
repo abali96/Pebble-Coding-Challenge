@@ -42,18 +42,54 @@ describe('Suite of unit tests', function() {
       done();
   });
 
-  describe('First (hopefully useful) test', function() {
-    it('should add clients to clients object', function(done) {
-      clients['1'].should.equal(socket1.id);
-      clients['2'].should.equal(socket2.id);
-      clients['3'].should.equal(socket3.id);
-      clients['4'].should.equal(socket4.id);
+  describe('Trapped individuals', function() {
+    it('should be identified/remembered by their room number on connect', function(done) {
       done();
-    })
+    });
+
+    it('should have their clicks tracked relative to the overall order', function(done) {
+      done();
+    });
+
+    it('should be notified if a click is out of order', function(done) {
+      done();
+    });
+
+    it('should be notified ("freed") if all clicks occur in the successful order', function(done) {
+      done();
+    });
   });
 
-  describe('Commander functions', function() {
-    it('should be able to save the order of rooms', function(done) {
+  describe('The commander', function() {
+    it('should be able to save the order of rooms only until four rooms have been announced', function(done) {
+      done();
+    });
+
+    it('should be able to delete the last room added to the list until four rooms have been announced', function(done) {
+      done();
+    });
+
+    it('should not be able to declare "complete" until four rooms have been announced', function(done) {
+      done();
+    });
+
+    it('should not be able to declare "incomplete" until four rooms have been announced', function(done) {
+      done();
+    });
+
+    it('when complete is called, the first room announced should be paged', function(done) {
+      done();
+    });
+
+    it('when incomplete is called, the last two room numbers should be erased', function(done) {
+      done();
+    });
+
+    it('should ignore duplicate room numbers and room numbers outside of 1 to 4', function(done) {
+      done();
+    });
+
+    it('should ignore duplicate room numbers and room numbers outside of 1 to 4', function(done) {
       done();
     });
   });

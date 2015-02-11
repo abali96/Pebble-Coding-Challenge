@@ -1,12 +1,7 @@
-// Explain how you would scale the situation out to
-// multiple groups of rooms all with different orders that
-// the buttons need to be pressed.
-// consider 'poor internet connection'
-
 var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
 var trappedIO = require('socket.io')(trappedHTTP);
-var clients = {}; // should these be global idk
+var clients = {};
 
 var commanderApp = require('express')();
 var commanderHTTP = require('http').Server(commanderApp);
@@ -24,15 +19,6 @@ function setFree() {
   }
 }
 
-function getRoomBySocketID(value) {
-  for (var key in clients) {
-    if (clients.hasOwnProperty(key)) {
-      if (clients[key] === value)
-        return key;
-    }
-  }
-}
-
 function printLog(value) {
   console.log(value);
   commanderIO.sockets.emit('update log', value);
@@ -43,9 +29,17 @@ trappedApp.get('/:roomNum', function(req, res){
   res.sendFile(__dirname + '/trapped.html');
 });
 
+trappedApp.get('/', function(req, res){
+    res.redirect('/1');
+});
+
 trappedIO.on('connection', function(socket){
-  var roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
-  clients[roomNum] = socket.id; // assume only one instance of given room's path will be accessed
+  var roomNum;
+
+  if (typeof socket.request.headers.referer != 'undefined')
+    roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
+
+  clients[roomNum] = socket.id;
   console.log("Room " + roomNum + " has connected");
 
   socket.on('disconnect', function(){
@@ -69,6 +63,7 @@ trappedIO.on('connection', function(socket){
       }
     }
   });
+
 });
 
 trappedHTTP.listen(3000, function(){
@@ -77,7 +72,7 @@ trappedHTTP.listen(3000, function(){
 
 // commander
 commanderIO.on('connection', function(socket) {
-  console.log("Commander has connected");
+  console.log('Commander has connected');
   socket.on('room order', function(roomNum) {
     if (roomNum == "one")
       roomNum = 1;
@@ -90,9 +85,6 @@ commanderIO.on('connection', function(socket) {
     }
     else
       printLog("Repeated or invalid input '" + roomNum + "' skipped");
-    // this accounts for false input from annyang or commander
-    // (used in development so no restart is necessary
-    // if annyang misinterprets a value)
 
     if (orderArray.length == 4) {
       commanderIO.sockets.emit('enable confirmation');
@@ -116,7 +108,6 @@ commanderIO.on('connection', function(socket) {
     orderArray.pop();
     printLog("Current order is: " + orderArray.join(", ")) ;
   });
-
 });
 
 commanderApp.get('/', function(req, res){
