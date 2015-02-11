@@ -85,7 +85,11 @@ describe('Suite of unit tests', function() {
       done();
     });
 
-    it('should ignore duplicate room numbers and room numbers outside of 1 to 4', function(done) {
+    it('should have commands with duplicate room numbers ignored ', function(done) {
+      done();
+    });
+
+    it('should have commands with room numbers outside of 1 to 4 ignored', function(done) {
       done();
     });
 
