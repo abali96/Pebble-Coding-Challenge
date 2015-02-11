@@ -30,9 +30,10 @@ trappedApp.get('/', function(req, res){
 });
 
 trappedIO.on('connection', function(socket){
+  var roomNum;
 
   if (typeof socket.request.headers.referer != 'undefined')
-    var roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
+    roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
 
   clients[roomNum] = socket.id;
   console.log("Room " + roomNum + " has connected");
