@@ -2,15 +2,11 @@ var trappedApp = require('express')();
 var trappedHTTP = require('http').Server(trappedApp);
 var trappedIO = require('socket.io')(trappedHTTP);
 var clients = {};
-
-var commanderApp = require('express')();
-var commanderHTTP = require('http').Server(commanderApp);
-var commanderIO = require('socket.io')(commanderHTTP);
 var orderArray = [];
 
 Number.prototype.between = function(min, max) {
   return this >= min && this <= max;
-};
+}
 
 function setFree() {
   if (!(clients[orderArray[0]] === 'undefined')) {  // debatable necessity
@@ -34,10 +30,9 @@ trappedApp.get('/', function(req, res){
 });
 
 trappedIO.on('connection', function(socket){
-  var roomNum;
 
   if (typeof socket.request.headers.referer != 'undefined')
-    roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
+    var roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
 
   clients[roomNum] = socket.id;
   console.log("Room " + roomNum + " has connected");
@@ -63,7 +58,6 @@ trappedIO.on('connection', function(socket){
       }
     }
   });
-
 });
 
 trappedHTTP.listen(3000, function(){
@@ -71,6 +65,10 @@ trappedHTTP.listen(3000, function(){
 });
 
 // commander
+var commanderApp = require('express')();
+var commanderHTTP = require('http').Server(commanderApp);
+var commanderIO = require('socket.io')(commanderHTTP);
+
 commanderIO.on('connection', function(socket) {
   console.log('Commander has connected');
   socket.on('room order', function(roomNum) {
@@ -95,6 +93,7 @@ commanderIO.on('connection', function(socket) {
 
   socket.on('confirm order', function(bool) {
     if (bool) {
+      trappedIO.sockets.emit('active buttons');
       setFree();
     }
     else {
@@ -108,8 +107,10 @@ commanderIO.on('connection', function(socket) {
     orderArray.pop();
     printLog("Current order is: " + orderArray.join(", ")) ;
   });
+
 });
 
+// routes
 commanderApp.get('/', function(req, res){
   res.sendFile(__dirname + '/commander.html');
 });

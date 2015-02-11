@@ -5,8 +5,8 @@
   </head>
   <body>
 
-  <button type="button" id='status'></button>
-  <p id="orderStatus">Don't click yet.</p>
+  <button type="button" id='status' disabled></button>
+  <p id="orderStatus">The commander is entering his commands.</p>
 
   <!-- start scripts -->
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
@@ -28,11 +28,16 @@
 
     $('button').on('click', function(){
       socket.emit('click');
+      $('#status').attr('disabled', true)
       $('#orderStatus').html("Thanks!");
     });
 
     socket.on('notification', function() {
       $('#orderStatus').html('Click now.');
+    });
+
+    socket.on('active buttons', function() {
+      $('#status').attr('disabled', false)
     });
   </script>
   </body>
