@@ -4,8 +4,6 @@ var io = require('socket.io-client')
 
 describe('Suite of unit tests', function() {
   var socket1, socket2, socket3, socket4;
-  var numUsers = 0;
-  var clients = {};
 
   beforeEach(function(done) {
     var connectionParams = {
@@ -19,10 +17,10 @@ describe('Suite of unit tests', function() {
     socket3 = io.connect('http://localhost:3000', connectionParams);
     socket4 = io.connect('http://localhost:3000', connectionParams);
 
-    socket1.on('connect', function() {numUsers += 1; console.log('client 1 connected...'); clients[numUsers] = socket1.id;});
-    socket2.on('connect', function() {numUsers += 1; console.log('client 2 connected...'); clients[numUsers] = socket2.id; });
-    socket3.on('connect', function() {numUsers += 1; console.log('client 3 connected...'); clients[numUsers] = socket3.id;});
-    socket4.on('connect', function() {numUsers += 1; console.log('client 4 connected...'); clients[numUsers] = socket4.id; done(); });
+    socket1.on('connect', function() {console.log('client 1 connected...')});
+    socket2.on('connect', function() {console.log('client 2 connected...')});
+    socket3.on('connect', function() {console.log('client 3 connected...')});
+    socket4.on('connect', function() {console.log('client 4 connected...'); done();});
   });
 
   afterEach(function(done) {
