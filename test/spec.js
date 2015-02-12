@@ -45,15 +45,15 @@ describe('Suite of unit tests', function() {
       done();
     });
 
-    it('should not be able to declare "complete" until four rooms have been announced', function(done) {
+    it('should not be able to declare "complete" until four rooms have been confirmed', function(done) {
       done();
     });
 
-    it('should not be able to declare "incomplete" until four rooms have been announced', function(done) {
+    it('should not be able to declare "incomplete" until four rooms have been confirmed', function(done) {
       done();
     });
 
-    it('when "complete" is called, the first room announced should be paged', function(done) {
+    it('when "complete" is called, the first room confirmed should be paged', function(done) {
       done();
     });
 
