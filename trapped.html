@@ -18,7 +18,7 @@
     var socket = io();
 
     socket.on('trapped forever', function(roomNum) {
-      $('#orderStatus').html("You're trapped forever! Blame room " + roomNum);
+      $('#orderStatus').html("You're trapped forever! Blame room " + roomNum + "!");
       $('#status').attr('disabled', true);
     });
 
