@@ -6,11 +6,12 @@
   <body>
 
   <button type="button" id='status' disabled></button>
-  <p id="orderStatus">The commander is entering his commands.</p>
+  <p id="orderStatus">Don't click yet - even if the button becomes active.</p>
 
   <!-- start scripts -->
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
   <script>
     $('#status').html("Escape Room " + window.location.pathname.slice(1) + "!");
 
@@ -18,17 +19,17 @@
 
     socket.on('trapped forever', function(roomNum) {
       $('#orderStatus').html("You're trapped forever! Blame room " + roomNum);
-      $('#status').attr('disabled', true)
+      $('#status').attr('disabled', true);
     });
 
     socket.on('free', function() {
       $('#orderStatus').html("You're free!");
-      $('#status').attr('disabled', true)
+      $('#status').attr('disabled', true);
     });
 
     $('button').on('click', function(){
       socket.emit('click');
-      $('#status').attr('disabled', true)
+      $('#status').attr('disabled', true);
       $('#orderStatus').html("Thanks!");
     });
 
@@ -37,7 +38,7 @@
     });
 
     socket.on('active buttons', function() {
-      $('#status').attr('disabled', false)
+      $('#status').attr('disabled', false);
     });
   </script>
   </body>

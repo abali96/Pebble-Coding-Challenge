@@ -36,6 +36,7 @@ trappedIO.on('connection', function(socket){
     roomNum = socket.request.headers.referer.split('http://localhost:3000/')[1];
 
   clients[roomNum] = socket.id;
+
   console.log("Room " + roomNum + " has connected");
 
   socket.on('disconnect', function(){
@@ -75,8 +76,8 @@ commanderIO.on('connection', function(socket) {
   socket.on('room order', function(roomNum) {
     if (roomNum == "one")
       roomNum = 1;
-
-    roomNum = Number(roomNum);
+    else
+      roomNum = Number(roomNum);
 
     if (roomNum.between(1,4) && orderArray.indexOf(roomNum) == -1) {
       orderArray.push(roomNum);
@@ -94,7 +95,9 @@ commanderIO.on('connection', function(socket) {
 
   socket.on('confirm order', function(bool) {
     if (bool) {
-      trappedIO.sockets.emit('active buttons');
+      trappedIO.sockets.emit('active buttons'); // Could change to just socket.emit
+      // if we wanted to only disactivate the one button.
+      // This just adds some excitement as it could go wrong.
       setFree();
     }
     else {
@@ -108,7 +111,6 @@ commanderIO.on('connection', function(socket) {
     orderArray.pop();
     printLog("Current order is: " + orderArray.join(", ")) ;
   });
-
 });
 
 // routes
