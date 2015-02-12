@@ -37,7 +37,7 @@ describe('Suite of unit tests', function() {
       done();
     });
 
-    it('should be able to save the order of rooms until only four rooms have been announced', function(done) {
+    it('should be able to save the order of rooms only until four rooms have been announced', function(done) {
       done();
     });
 
