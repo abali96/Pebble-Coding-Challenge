@@ -41,7 +41,7 @@ describe('Suite of unit tests', function() {
       done();
     });
 
-    it('should be able to delete the last room added to the list until four rooms have been announced', function(done) {
+    it('should be able to delete the last room added to the only list until four rooms have been announced', function(done) {
       done();
     });
 
