@@ -75,6 +75,10 @@ describe('Suite of unit tests', function() {
       done();
     });
 
+    it('should be paged at the appropriate time', function(done) {
+      done();
+    });
+
     it('should have their identity known on click', function(done) {
       done();
     });
